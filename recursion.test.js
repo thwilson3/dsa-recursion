@@ -24,6 +24,7 @@ describe("longest", function() {
     expect(longest([])).toBe(0);
     expect(longest(["hello"])).toBe(5);
     expect(longest(["hi", "hello", "hola"])).toBe(5);
+    expect(longest(["hi", "hello", "hola", "house", "car", "testingword"])).toBe(11);
   });
 });
 
