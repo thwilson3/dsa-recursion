@@ -9,30 +9,9 @@ function product(nums) {
 /** longest: return the length of the longest word in an array of words. */
 
 function longest(words) {
-  // console.log(words);
   if (words.length === 0) return 0;
 
-  // if (words[0]?.length > words[1]?.length){
-  //   return words[0]?.length;
-  // } else if (words[1]?.length > words[0]?.length) {
-  //   return words[1]?.length;
-  // }
-
-  return Math.max(words[0].length, longest(words.slice(1)))
-
-  // let longest = 0;
-
-  // function length(word){
-  //   if (longest < word.length){
-  //     longest = word.length;
-  //   }
-  // }
-
-  // for(let word of words){
-  //   length(word);
-  // }
-
-  // return longest;
+  return Math.max(words[0].length, longest(words.slice(1)));
 }
 
 /** everyOther: return a string with every other letter. */
@@ -71,12 +50,12 @@ function isPalindrome(str) {
 
 function revString(str) {
   if (str.length === 0) return "";
-  return revString((str.slice(1))) + str[0];
+  return revString(str.slice(1)) + str[0];
 }
 
 /** findIndex: return the index of val in arr (or -1 if val is not present). */
 
-function findIndex(arr, val, idx=0) {
+function findIndex(arr, val, idx = 0) {
   if (arr.length === idx) return -1;
 
   if (arr[idx] === val) return idx;
@@ -86,14 +65,67 @@ function findIndex(arr, val, idx=0) {
 
 /** gatherStrings: given an object, return an array of all of the string values. */
 
-function gatherStrings(obj) {}
+function gatherStrings(obj, arr = []) {
+  if (obj.length === 0) return [];
+
+  for (let key in obj) {
+    if (typeof obj[key] === "object" && !Array.isArray(obj[key])) {
+      gatherStrings(obj[key], arr);
+    } else {
+      if (typeof obj[key] === "string") {
+        arr.push(obj[key]);
+      }
+    }
+  }
+
+  return arr;
+}
+
+/**
+ *
+ * Ari's beautiful solution
+ *
+ */
+// function gatherStrings(obj){
+//   // base case:
+//   if (obj.length === 0) return [];
+
+//   const strings = [];
+
+//   for (let key in obj) {
+//     if (typeof obj[key] === 'string'){
+//       strings.push(obj[key]);
+//     }
+//     if (typeof obj[key] === 'object' && !Array.isArray(obj[key])){
+//       strings.push(...gatherStrings(obj[key]));
+//     }
+//   }
+
+//   return strings;
+// }
 
 // FURTHER STUDY
 
 /** binarySearch: given a sorted array of numbers, and a value,
  * return true if val is in array, false if not present). */
 
-function binarySearch(arr, val) {}
+function binarySearch(arr, val) {
+  if (arr.length === 0) return false;
+
+  if (arr.length === 1) {
+    return arr[0] === val;
+  }
+
+  const middle = Math.floor(arr.length / 2);
+
+  if (arr[middle] === val) {
+    return true;
+  } else if (arr[middle] < val) {
+    return binarySearch(arr.slice(middle), val);
+  } else {
+    return binarySearch(arr.slice(0, middle), val);
+  }
+}
 
 /** binarySearch: given a sorted array of numbers, and a value,
  * return the index of that value (or -1 if val is not present). */
