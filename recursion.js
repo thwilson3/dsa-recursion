@@ -121,7 +121,7 @@ function binarySearch(arr, val) {
   if (arr[middle] === val) {
     return true;
   } else if (arr[middle] < val) {
-    return binarySearch(arr.slice(middle), val);
+    return binarySearch(arr.slice(middle + 1), val);
   } else {
     return binarySearch(arr.slice(0, middle), val);
   }
@@ -130,7 +130,42 @@ function binarySearch(arr, val) {
 /** binarySearch: given a sorted array of numbers, and a value,
  * return the index of that value (or -1 if val is not present). */
 
-function binarySearchIndex(arr, val) {}
+function binarySearchIndex(arr, val) {
+  if (arr.length === 0) return -1;
+  if (arr.length === 1 && arr[0] !== val) return -1;
+  if (arr.length === 1 && arr[0] === val) return 0;
+
+
+  const middle = Math.floor(arr.length / 2);
+  let idx;
+
+  if (arr[middle] === val) {
+    return middle;
+  }
+
+  // left side
+  else if (arr[middle] > val) {
+    idx = binarySearchIndex(arr.slice(0, middle), val);
+  }
+  // right side
+  else if (arr[middle] < val) {
+    idx = binarySearchIndex(arr.slice(middle + 1), val);
+    if (idx === -1) return -1;
+    idx += middle + 1;
+  }
+
+  return idx === -1 ? -1 : idx;
+
+
+
+
+  // findValIdx(idx){
+  //   if (arr[idx] === val) return idx;
+  //   binarySearchIndex(arr, val);
+  // }
+  // idx = binarySearchIndex(arr, val) + 1;
+  // return idx === -1 ? -1 : idx
+}
 
 // you might find the above two problems easier if you change the function signature to:
 //
